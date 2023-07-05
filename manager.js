@@ -19,5 +19,10 @@ setInterval(() => {
     console.log('...........................................................')
     console.log(`Manager: new flight with ID ${Flight.Details.flightID} have been scheduled`);
     event.emit('new-flight', Flight);
-    // if (Arrived) { console.log(`Manager: we’re greatly thankful for the amazing flight, ${Flight.flightID}`) }
+    event.emit('system-newFlight', Flight);
 }, 10000);
+event.on('thankYou', (payload) => {
+    setTimeout(() => {
+        console.log(`Manager: we’re greatly thankful for the amazing flight, ${payload.Details.pilot}`)
+    }, 1000);
+})
