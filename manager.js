@@ -11,7 +11,7 @@ setInterval(() => {
         time: faker.date.future({ refDate: '2023-07-04T00:00:00.000Z' }),
         Details: {
             airLine: 'Royal Jordanian Airlines',
-            destination: faker.location.city,
+            destination: faker.location.country(),
             pilot: faker.person.fullName(),
             flightID: uuidv4(),
         },
