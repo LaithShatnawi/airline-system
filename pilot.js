@@ -5,13 +5,13 @@ let Arrived = false;
 event.on('new-flight', (payload) => {
     setInterval(() => {
         event.emit('took-off', payload);
-        console.log(`Pilot: flight with ID ${payload.flightID} took-off`);
+        console.log(`Pilot: flight with ID ${payload.Details.flightID} took-off`);
     }, 4000);
 });
 event.on('took-off', (payload) => {
     setInterval(() => {
         event.emit('Arrived', payload);
-        console.log(`Pilot: flight with ID ${payload.flightID} has arrived`);
+        console.log(`Pilot: flight with ID ${payload.Details.flightID} has arrived`);
     }, 3000);
 })
 event.on('Arrived', (payload) => {

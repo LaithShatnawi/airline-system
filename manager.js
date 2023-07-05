@@ -1,5 +1,6 @@
 'use strict';
 const { faker } = require('@faker-js/faker');
+const { v4: uuidv4 } = require('uuid');
 const event = require('./events');
 require('./pilot');
 require('./system');
@@ -12,11 +13,11 @@ setInterval(() => {
             airLine: 'Royal Jordanian Airlines',
             destination: faker.location.city,
             pilot: faker.person.fullName(),
-            flightID: faker.string.uuid(),
+            flightID: uuidv4(),
         },
     }
     console.log('...........................................................')
-    console.log(`Manager: new flight with ID ${Flight.flightID} have been scheduled`);
+    console.log(`Manager: new flight with ID ${Flight.Details.flightID} have been scheduled`);
     event.emit('new-flight', Flight);
     // if (Arrived) { console.log(`Manager: we’re greatly thankful for the amazing flight, ${Flight.flightID}`) }
 }, 10000);
