@@ -1,9 +1,10 @@
 'use strict';
+require('dotenv').config();
 const { faker } = require('@faker-js/faker');
 const { v4: uuidv4 } = require('uuid');
-const event = require('./events');
-require('./pilot');
-require('./system');
+const port = process.env.PORT;
+const io = require('socket.io-client');
+let systemConnection = io.connect(`http://localhost:${port}/`);
 
 setInterval(() => {
     const Flight = {
@@ -18,10 +19,11 @@ setInterval(() => {
     }
     console.log('...........................................................')
     console.log(`Manager: new flight with ID ${Flight.Details.flightID} have been scheduled`);
-    event.emit('new-flight', Flight);
-    event.emit('system-newFlight', Flight);
+    systemConnection.emit('new-flight', Flight);
+    systemConnection.emit('system-newFlight', Flight);
 }, 10000);
-event.on('thankYou', (payload) => {
+
+systemConnection.on('thankYou', (payload) => {
     setTimeout(() => {
         console.log(`Manager: we’re greatly thankful for the amazing flight, ${payload.Details.pilot}`)
     }, 1000);
