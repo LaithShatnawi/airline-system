@@ -5,6 +5,11 @@ const io = require('socket.io-client');
 let systemConnection = io.connect(`http://localhost:${port}/`);
 let airlineConnection = io.connect(`http://localhost:${port}/airline`);
 
+systemConnection.emit('get-all');
+systemConnection.on('flight', (flight) => {
+    console.log(`Pilot: Sorry i didn\'t catch this flight ID `, flight.id);
+    systemConnection.emit('received', flight);
+})
 systemConnection.on('newFlight', (payload) => {
     setTimeout(() => {
         console.log(`Pilot: flight with ID ${payload.Details.flightID} took-off`);
